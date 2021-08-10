@@ -13,14 +13,7 @@ const dir = "../testing-scripts/output";
   const results = {};
   for await (const path of globby.stream(
     [
-      "webapp/src/js/**/*.(js|jsx)",
-      "webapp/src/html/**/*.html",
-      "webapp/src/authApp/**/*.(js|jsx)",
-      "webapp/src/eusApp/**/*.(js|jsx)",
-      "webapp/src/remoteSupportLandingPage/**/*.(js|jsx)",
-      "webapp/src/superAdminApp/**/*.(js|jsx)",
-      "webapp/src/*.js",
-      "webapp/src/reportViewer/**/*.(js|jsx)",
+      // path for each file that needs to be checked
     ],
     options
   )) {
