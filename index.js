@@ -3,7 +3,7 @@ const fs = require("fs").promises;
 const globby = require("globby");
 const dotNotationRegex = /("|'|`)((?:\w+[.])+\w+)("|'|`)/g;
 // const dotNotationDynamicRegex = /("|')((?:\w+[.])+(\w|\w*\$\{\w+\})+)("|')/g
-const englishTokens = require("./webapp/public/en-us.json");
+const jsonTest = require("./test.json");
 const dir = "../testing-scripts/output";
 (async () => {
   const options = {
@@ -13,14 +13,9 @@ const dir = "../testing-scripts/output";
   const results = {};
   for await (const path of globby.stream(
     [
-      "webapp/src/js/**/*.(js|jsx)",
-      "webapp/src/html/**/*.html",
-      "webapp/src/authApp/**/*.(js|jsx)",
-      "webapp/src/eusApp/**/*.(js|jsx)",
-      "webapp/src/remoteSupportLandingPage/**/*.(js|jsx)",
-      "webapp/src/superAdminApp/**/*.(js|jsx)",
-      "webapp/src/*.js",
-      "webapp/src/reportViewer/**/*.(js|jsx)",
+      // "paths---> /js/**/*.(js|jsx)",
+      // "paths---> /src/html/**/*.html",
+      // "paths---> /src/authApp/**/*.(js|jsx)",
     ],
     options
   )) {
@@ -37,7 +32,7 @@ const dir = "../testing-scripts/output";
     if (!matches) continue;
     for (const match of matches) {
       const m = match.replace(/"|'/g, "");
-      if (englishTokens[m]) {
+      if (jsonTest[m]) {
         const item = results[m];
         if (item) {
           item.push(path);
@@ -47,11 +42,11 @@ const dir = "../testing-scripts/output";
       }
     }
   }
-  console.log("allTokens", Object.keys(englishTokens).length);
+  console.log("allTokens", Object.keys(jsonTest).length);
   // const allKeys = Object.keys(englishTokens);
   // console.log("results", Object.keys(results).length);
   console.log("results", Object.keys(results).length);
-  const resultKeys = R.pick(Object.keys(results), englishTokens);
+  const resultKeys = R.pick(Object.keys(results), jsonTest);
   console.log("final", Object.keys(resultKeys).length);
 
   await fs.mkdir(dir, { recursive: true });
